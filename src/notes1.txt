@@ -1,0 +1,1117 @@
+When you use ../assets/assets.js, it means:
+
+    Start from components (where Sidebar.js is located).
+    Move up one level to src.
+    Go into the assets folder.
+    Locate and import the assets.js file.
+
+Player.jsx
+<div className='hidden lg:flex items-center gap-4'>
+On smaller screens (<1024px): The hidden class applies , so the element is not visible.
+On large screens (≥1024px): The lg:flex class overrides hidden and applies display: flex, making the element visible.
+
+<p>{songsData[0].desc.slice(0,12)}</p>
+This is done to shorten the description to only include characters from 0th index to 11th index.
+
+To get the browser router support in the <App/> we need to do :
+npm i react-router-dom in terminal after doing CTRL+C
+Then:
+main.jsx:
+import { BrowserRouter } from 'react-router-dom'
+<BrowserRouter>
+  <App />
+</BrowserRouter>
+
+Dsiplay.jsx
+overflow: auto;
+Effect: The element will show scrollbars only when necessary (i.e., if the content overflows the element's boundaries).
+
+
+
+
+<Routes>
+        <Route path='/' element={<DisplayHome/>}></Route> 
+</Routes>
+
+This line is written in React Router syntax.
+
+<Routes> is a component that wraps multiple <Route> components, allowing you to define multiple routes in a single place.
+
+<Route> is a component that defines a single route.
+
+In this specific case, the code is defining a single route with the following properties:
+
+path='/': This specifies that the route should be triggered when the URL path is the root URL ('/').
+element={<DisplayHome/>}: This specifies that when the route is triggered, the <DisplayHome/> component should be rendered.
+In essence, this code is saying: "When the user navigates to the root URL ('/'), render the <DisplayHome/> component."
+
+When the user navigates to the root URL ('/'), the <DisplayHome/> component will be rendered, which is likely the "Home" page of your application. So, in essence, yes, clicking on this route would take you to the Home page.
+
+
+
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+
+This is a CSS rule that targets the scrollbar on webkit-based browsers (such as Google Chrome and Safari).
+
+The rule ::-webkit-scrollbar { display: none; } hides the scrollbar on these browsers.
+
+In other words, when this rule is applied, the scrollbar will not be visible, even if the content is longer than the viewport and would normally require scrolling.
+
+Note that this rule only affects webkit-based browsers, and will not affect other browsers like Firefox or Edge. If you want to hide the scrollbar on all browsers, you would need to use a different approach.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To hide the scrollbar on the majority of browsers, you can use the following CSS rule:
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+-ms-overflow-style: none; /* for IE and Edge */
+overflow: -moz-scrollbars-none; /* for Firefox */
+However, this method still doesn't work for all browsers. A more reliable method is to use the overflow property on the container element, like this:
+
+
+.container {
+  overflow: hidden;
+}
+This will hide the scrollbar on all browsers, but keep in mind that it will also prevent the user from scrolling the content.
+
+If you want to allow scrolling but hide the scrollbar, you can use a combination of overflow and overflow-y properties:
+
+
+.container {
+  overflow-y: scroll; /* allow vertical scrolling */
+  overflow-x: hidden; /* hide horizontal scrollbar */
+  -ms-overflow-style: none; /* for IE and Edge */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* for webkit-based browsers */
+}
+This method should work for the majority of browsers, but keep in mind that it's not foolproof and might not work on all browsers or devices.
+
+
+
+
+
+
+
+
+this line:
+ <Routes>
+        <Route path='/' element={<DisplayHome/>}></Route> 
+      </Routes>
+Mean that when the url in browser is that of home page,which is kind of the default setup then the DisplayHome component is called
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+when we call the Display component in App.jsx then when Display component is rendered there we did this line:
+ <Routes>
+        <Route path='/' element={<DisplayHome/>}></Route> 
+      </Routes>
+Mean that when the url in browser is that of home page('/'),which is kind of the default setup then the DisplayHome component is called. So from Display we go to DisplayHome component, there in DisplayHome Component we have this line:
+{albumsData.map((item,index)=><AlbumItem key={index} name={item.name} desc={item.desc} id={item.id} image={item.image}/>)}
+Which essentially loops over every element(which are essentially an object) of the albumsData array, for each object element in albumsData array we call AlbumItem Component and to it we pass props key={index} name={item.name} desc={item.desc} id={item.id} image={item.image} which has the data in it, and these data is received here:
+const AlbumItem = ({image,name,desc,id}) =>...
+And the this way the component rendering flow occurs.
+
+Chatgpt explanation:
+Rendering Flow:
+
+    In App.jsx:
+        The Display component is called inside the main layout:
+
+    <Display />
+
+In Display.jsx:
+
+    The Display component contains the Routes element:
+
+    <Routes>
+      <Route path='/' element={<DisplayHome />} />
+    </Routes>
+
+    This means:
+        When the browser's URL matches '/' (the home page), the DisplayHome component is rendered.
+
+In DisplayHome.jsx:
+
+    The albumsData array is mapped over to generate multiple AlbumItem components:
+
+    {albumsData.map((item, index) => (
+      <AlbumItem 
+        key={index} 
+        name={item.name} 
+        desc={item.desc} 
+        id={item.id} 
+        image={item.image} 
+      />
+    ))}
+
+    For each object in the albumsData array:
+        A new AlbumItem component is created.
+        The name, desc, id, and image values from the object are passed as props to AlbumItem.
+
+In AlbumItem.jsx:
+
+    The AlbumItem component receives the props and destructures them:
+
+        const AlbumItem = ({ image, name, desc, id }) => { ... }
+
+        The values passed as props are now available within the AlbumItem component and are used to render its UI.
+
+Conclusion:
+
+Your understanding that the rendering flow moves from Display → DisplayHome → multiple AlbumItem components is correct. The albumsData array serves as the source of data, and each item in the array generates an AlbumItem component with the respective data passed via props.
+
+
+AlbumItem.jsx:
+ <div onClick={()=>navigate(`/album/${id}`)} className='min-w-[180px] p-2  px-3 rounded cursor-pointer hover:bg-[#ffffff26]'>
+
+ This means that when we click on the div tag then the URL will be changed and we go to a different page without reloading
+
+ Also, the navigate function is a prebuilt function provided by React Router. Specifically, it's returned by the useNavigate() hook, which is part of React Router's library.
+How It Works:
+
+    useNavigate() Hook:
+        When you call useNavigate(), it gives you access to the navigate function.
+        This navigate function is tied to the routing system in your React application.
+
+    What navigate Does:
+        It allows you to programmatically change the current route in your app without requiring a <Link> component or reloading the page.
+        It interacts with React Router to update the browser's URL and render the appropriate component for the new route.
+
+Example Workflow:
+
+    You call useNavigate():
+
+const navigate = useNavigate();
+
+Now, navigate is a function you can use in your component.
+
+You use navigate to change the route:
+
+    navigate('/album/5');
+
+    This tells React Router to:
+        Change the browser's URL to /album/5.
+        Render the corresponding component for the /album/:id route (if it exists in your routing configuration).
+
+So, while navigate is not something you wrote, it's a helper function provided by React Router to manage navigation programmatically in single-page applications.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Question:
+Now earlier when we did not do <Route path='/album/:id' element={<DisplayAlbum/>}></Route> 
+But we did <div onClick={()=>navigate(/album/${id})} className='min-w-[180px] p-2  px-3 rounded cursor-pointer hover:bg-[#ffffff26]'>
+Even then when we clicked on the div we went to a different page when we clicked on the div
+So whats the purpose of<Route path='/album/:id' element={<DisplayAlbum/>}></Route>   ?
+
+
+
+Answer:
+1. What happens without the <Route>?
+
+When you clicked on the <div> and called navigate(/album/${id}), the browser's URL changed to /album/<id>. However:
+
+    Without the <Route path='/album/:id' element={<DisplayAlbum/>}>, React Router doesn't know what component to render for that URL.
+    As a result, React Router would show a blank page because no route matches the /album/:id path.
+
+Changing the URL alone doesn't automatically tell React Router what to display. It just updates the address bar.
+2. Why do we need <Route path='/album/:id' element={<DisplayAlbum/>}>?
+
+This <Route> is the instruction that tells React Router:
+
+    "If the URL matches /album/:id, render the DisplayAlbum component."
+    Without this, React Router has no clue which component to show for /album/:id.
+
+In short:
+
+    The navigate(/album/${id}) changes the URL.
+    The <Route path='/album/:id'> determines what to display when the URL changes.
+
+Summary:
+
+    navigate() changes the URL.
+    <Route> connects a URL to a specific component, so React Router knows what to display.
+
+Both are necessary to ensure smooth navigation and proper rendering of components!
+
+
+
+ <Route> is a component provided by React Router. It is used to define the mapping between a URL path and the component that should be rendered for that path. Essentially, it tells React Router, "When the URL matches this path, display this component."
+
+
+
+ In React, useParams() is a hook provided by react-router-dom, which is used to access the parameters of the current URL. This is especially useful when you're working with dynamic routes in your application.
+
+For example, if you have a route like /albums/:albumId, the :albumId part is a dynamic parameter. Using useParams(), you can access the value of albumId in the component that's rendered for that route. 
+In simple terms if we click on a div of any album then we would go to a different page , now say we want to access the id of the div album that we clicked then we need useParams() hook to access this id so we did const {id}=useParams() and now when we click on a div album then the id will get stored in the `id`
+
+Note:
+while creating this router we did:
+<Route path='/album/:id' element={<DisplayAlbum/>}></Route> 
+and in useParams() we used this same name:
+ const {id} = useParams()
+ That is `id` so this `id` name should be same
+
+The name used in the route path and the parameter you extract with useParams() should match.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Display.jsx
+const location = useLocation();
+
+This line uses the useLocation hook from react-router-dom.
+
+    Purpose of useLocation:
+        It provides information about the current URL, such as the pathname, search parameters, and hash.
+        It updates whenever the URL changes, making it useful for tracking the current location in your app.
+
+    What location Contains: location is an object with properties like:
+        pathname: The current path (e.g., /home).
+        search: The query string in the URL (e.g., ?id=123).
+        hash: The hash part of the URL (e.g., #section1).
+        state: Any state passed through navigation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const displayRef = useRef();
+
+    What it does:
+    Creates a ref to reference the div element where this component is rendered.
+    The phrase "ref to reference" means that the useRef hook in React creates a reference object that can be used to directly access or point to a specific DOM element or value within a component.
+    Why it’s needed:
+    This allows direct manipulation of the DOM element (e.g., to change the background color dynamically).
+
+2. const location = useLocation();
+
+    What it does:
+    Retrieves information about the current URL (e.g., pathname) from react-router-dom.
+    Why it’s needed:
+    The current pathname determines if the user is on the /album/:id route or not, and controls what background color is applied to the div.
+
+3. console.log(location);
+
+    What it does:
+    Logs the location object for debugging purposes.
+    Example Output:
+    If the user is on /album/2, the output might look like:
+
+    { pathname: '/album/2', search: '', hash: '', state: null, key: 'someKey' }
+
+4. const isAlbum = location.pathname.includes("album");
+
+    What it does:
+    Checks if the current pathname contains the word "album".
+    Why it’s needed:
+    This helps determine if the user is on an album page (/album/:id) or the home page (/).
+    Example Output:
+        If pathname is /album/2, isAlbum will be true.
+        If pathname is /, isAlbum will be false.
+
+5. const albumId = isAlbum ? location.pathname.slice(-1) : "";
+
+    What it does:
+        If isAlbum is true, extracts the last character from the pathname (assumed to be the album ID).
+        Otherwise, sets albumId to an empty string.
+    Why it’s needed:
+    The extracted albumId is used to fetch the background color from albumsData.
+
+6. const bgColor = albumsData[Number(albumId)].bgColor;
+
+    What it does:
+        Converts albumId to a number (e.g., '2' becomes 2) and retrieves the corresponding bgColor from albumsData.
+        Example: If albumId is 2, bgColor might be something like #ff5733.
+    Why it’s needed:
+    The background color depends on the album ID, which comes from albumsData.
+
+7. useEffect(() => { ... });
+
+This is a React hook that runs side effects after the component renders.
+
+    What it does:
+        Checks if the current route is an album page (isAlbum).
+        Updates the background color of the div referenced by displayRef:
+            If isAlbum is true, applies a gradient background using the bgColor from albumsData.
+            Otherwise, sets the background to a default color (#121212).
+
+    Why it’s needed:
+        Dynamically updates the background based on the route.
+        Ensures the background matches the album's theme.
+
+Example Workflow:
+
+    User visits /album/2:
+        location.pathname is /album/2.
+        isAlbum is true.
+        albumId is 2 (from slice(-1)).
+        bgColor is fetched from albumsData[2].
+        Background is set to linear-gradient(bgColor, #121212).
+
+    User visits /:
+        location.pathname is /.
+        isAlbum is false.
+        albumId is an empty string.
+        Background is set to #121212.
+
+
+
+ displayRef.current.style.background
+ Here, The current property of a ref object points to the DOM element it is attached to using the ref attribute
+ In the given code, the current property of the displayRef object is attached to the <div> element inside the return statement. Specifically, it's this <div>:
+
+<div 
+  ref={displayRef} 
+  className='w-[100%] m-2 px-6 pt-4 rounded bg-[#121212] text-white overflow-auto lg:w-[75%] lg:ml-0'>
+  <Routes>
+    <Route path='/' element={<DisplayHome />} />
+    <Route path='/album/:id' element={<DisplayAlbum />} />
+  </Routes>
+</div>
+
+
+
+
+
+
+
+
+App.jsx:
+<audio preload='auto'></audio>
+
+The <audio> element in HTML is used to embed audio content in a web page. The preload attribute specifies how the browser should handle loading the audio file when the page loads.
+Understanding <audio preload="auto">:
+
+    <audio>:
+        This is the HTML tag for embedding an audio file in a webpage.
+        You can include attributes like src for the file source, controls for playback controls, and more.
+
+    Example:
+
+<audio src="audio-file.mp3" controls></audio>
+
+preload="auto":
+
+    The preload attribute gives the browser a hint about how it should load the audio file.
+    The auto value means that the browser should load the entire audio file as soon as the page loads, regardless of whether the user plays it or not.
+
+
+
+
+
+PlayerContext.jsx
+  const audioRef = useRef();
+  const contextValue={
+    //This is where you define the data or functions you want to share with other components.
+    audioRef
+
+    const audioRef = useRef();
+
+At this point, audioRef is just an empty reference object. It does not inherently know that it will be linked to an <audio> element. The connection to the <audio> element happens only when the ref is attached to the element in the JSX, like this:
+
+<audio ref={audioRef} preload='auto'></audio>
+Which we eventually do:
+
+App.jsxconst App = () => {
+  const {audioRef} = useContext(PlayerContext) 
+  return (
+    <div className='h-screen bg-black'>
+      <div className='h-[90%] flex'>
+        <Sidebar/> 
+        <Display/>
+      </div>
+      <Player/>
+      <audio ref={audioRef} preload='auto'></audio>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PlayerContext.jsx:
+
+This code is setting up a React Context to manage and share state or data across multiple components without needing to pass props through every level of the component tree. Here’s a simple explanation, step by step:
+1. What is createContext?
+
+export const PlayerContext = createContext();
+
+    createContext Function:
+        It creates a "context" object that allows you to share data across components.
+        Think of it like a container where you can store shared data (state, functions, etc.) that other components can use.
+
+    PlayerContext:
+        This is the context object created by createContext().
+        Other components can "consume" this context to access the shared data.
+
+2. What is a Context Provider?
+
+const PlayerContextProvider = (props) => {
+
+    A "provider" is a component that gives access to the context to all of its child components.
+    Purpose of PlayerContextProvider:
+        It "wraps" other components and makes the context available to them.
+
+3. What is contextValue?
+
+const contextValue = {};
+
+    This is where you define the data or functions you want to share with other components.
+    In this example, it's currently empty ({}), but you can add things like:
+
+    const contextValue = {
+      playerState: "playing", 
+      togglePlay: () => { /* function to toggle playback */ }
+    };
+
+4. How Does the Provider Work?
+
+return (
+  <PlayerContext.Provider value={contextValue}>
+    {props.children}
+  </PlayerContext.Provider>
+);
+
+    <PlayerContext.Provider>:
+        This is the "provider" for the PlayerContext.
+        It provides the contextValue to all components that it wraps.
+
+    value={contextValue}:
+        This is the actual data or state being shared.
+        Any component that accesses the PlayerContext will receive this contextValue.
+
+    props.children:
+        Represents all the child components wrapped inside PlayerContextProvider.
+        For example:
+
+        <PlayerContextProvider>
+          <App />
+        </PlayerContextProvider>
+
+        Here, <App /> is passed as props.children.
+
+5. Exporting the Provider
+
+export default PlayerContextProvider;
+
+    This allows other files to import and use the PlayerContextProvider.
+
+Purpose of the Code
+
+    Set Up a Shared State:
+        This code is the foundation for creating a global state or shared data for your app.
+
+    Avoid Prop Drilling:
+        You can share data with deeply nested components without manually passing props down through every level.
+
+    Reusable Logic:
+        Centralize logic for your app (e.g., player controls) in one place and access it from anywhere.
+
+Example of How It Will Be Used
+
+    Wrap the app with the provider:
+
+<PlayerContextProvider>
+  <App />
+</PlayerContextProvider>
+
+Access the context in a component:
+
+    import { useContext } from "react";
+    import { PlayerContext } from "./context/PlayerContext";
+
+    const SomeComponent = () => {
+      const context = useContext(PlayerContext);
+      console.log(context); // Access shared data or functions
+      return <div>{/* Use context data */}</div>;
+    };
+
+This setup will help you manage shared player-related state (like playback status, volume, or current song) across multiple components in your project. 
+
+
+
+
+Roles of PlayerContext.Provider and PlayerContextProvider in simple terms:
+PlayerContext.Provider:
+
+    This is the actual provider component that comes from the createContext() function.
+    It is responsible for "providing" the context value to all the child components wrapped inside it.
+    You must pass a value prop to it, which contains the data or functions you want to share.
+
+PlayerContextProvider:
+
+    This is the custom wrapper component you created.
+    It uses <PlayerContext.Provider> internally to:
+        Simplify usage.
+        Add extra logic or state before sharing the context value.
+    Think of it as a convenience layer around the actual provider (PlayerContext.Provider).
+
+Why Use a Custom Wrapper (PlayerContextProvider)?
+
+    Simplifies Code:
+        Instead of directly using <PlayerContext.Provider> everywhere in your app, you use <PlayerContextProvider>. This keeps your code clean and consistent.
+
+    Encapsulation:
+        You can add logic (e.g., managing state or functions) inside PlayerContextProvider without exposing it to the rest of your app.
+
+    Reusability:
+        You can reuse PlayerContextProvider across different parts of your app if needed.
+
+Key Difference:
+
+    PlayerContext.Provider:
+        The underlying provider component from React Context API.
+        Requires you to manage and pass the value manually.
+
+    PlayerContextProvider:
+        A custom component that wraps PlayerContext.Provider.
+        Automatically handles the value setup and provides an easy-to-use wrapper for your app.
+
+Analogy:
+
+    Think of PlayerContext.Provider as the raw power source.
+    PlayerContextProvider is the neatly packaged plug-and-play adapter you created to make it easier to use.
+
+In Code Terms:
+
+const PlayerContextProvider = (props) => {
+  const contextValue = {
+    // Your shared state or functions
+  };
+
+  return (
+    <PlayerContext.Provider value={contextValue}>
+      {props.children}
+    </PlayerContext.Provider>
+  );
+};
+
+Here, PlayerContextProvider is your adapter that wraps the actual PlayerContext.Provider and passes the contextValue automatically.
+Usage:
+
+Instead of writing:
+
+<PlayerContext.Provider value={{ /* shared data */ }}>
+  <App />
+</PlayerContext.Provider>
+
+You simply write:
+
+<PlayerContextProvider>
+  <App />
+</PlayerContextProvider>
+
+
+
+
+
+
+audioRef.current.play();
+
+Breakdown:
+
+    audioRef:
+        This is a useRef object that is used to reference the <audio> DOM element in your application.
+
+    .current:
+        This property of a ref object refers to the DOM element that the ref is attached to. In this case, audioRef.current will point to the <audio> element in the DOM.
+
+    .play():
+        The .play() method is a built-in JavaScript method available on the <audio> or <video> DOM elements.
+        It tells the browser to start playing the audio or video.
+
+
+App.jsx
+<audio ref={audioRef} src={track.file} preload='auto'></audio>
+
+Explanation of src={track.file}:
+
+    src:
+        The src attribute of the <audio> tag specifies the URL of the audio file that the <audio> element will play.
+    
+    {track.file}:
+
+    This is a dynamic value (React JSX syntax) that comes from the track object, which is part of the PlayerContext.
+    track.file represents the file path or URL to the audio file for the currently selected track.
+    track.file is equivalent to songsData[0].file, which is "https://example.com/song1.mp3".
+
+const audioRef = useRef();
+The audioRef is a React reference object created using useRef():
+<audio ref={audioRef} src={track.file} preload='auto'></audio>
+The ref attribute connects the <audio> DOM element to the audioRef.
+After the <audio> element is rendered, audioRef.current will point to the actual <audio> DOM element in the browser.
+
+
+
+
+
+
+
+
+
+
+ so in main.jsx we did:
+<PlayerContextProvider>
+  <App />
+</PlayerContextProvider>
+So in main.jsx, the PlayerContextProvider wraps the <App/> component so the values of audioRef,
+    seekBar,
+    seekBg,
+    track,
+    setTrack,
+    playStatus,
+    setPlayStatus,
+    time,
+    setTime,
+    play,
+    pause
+are available in App.jsx
+Then in App.jsx we called <Sidebar/> <Display/> and <Player/> component so these values are available in these components too.
+
+
+
+Wrapping <App /> with PlayerContextProvider:
+
+In main.jsx, you did this:
+
+<PlayerContextProvider>
+  <App />
+</PlayerContextProvider>
+
+    This makes the context values (like audioRef, seekBar, track, play, pause, etc.) accessible to all components inside <App /> and its descendants.
+    Think of PlayerContextProvider as a global wrapper that "injects" shared data and functions into your app.
+
+2. Context Values in App.jsx:
+
+In App.jsx, you used useContext to access context values:
+
+const { audioRef, track } = useContext(PlayerContext);
+
+    Now, audioRef and track are available directly in App.jsx for the <audio> element.
+
+You also rendered these components in App.jsx:
+
+<Sidebar />
+<Display />
+<Player />
+
+Since these components are descendants of <PlayerContextProvider>, they can also access the same context values.
+3. Context Values in <Sidebar />, <Display />, and <Player />:
+
+    Any child or descendant component (like <Sidebar />, <Display />, or <Player />) can use the useContext(PlayerContext) hook to access the same context values.
+
+For example:
+
+    In <Player />, you did this:
+
+    const { seekBar, seekBg, playStatus, play, pause } = useContext(PlayerContext);
+
+        Now, <Player /> can use play and pause to control the audio and seekBar and seekBg for the progress bar.
+
+Key Point:
+
+All components inside the PlayerContextProvider hierarchy (direct or indirect children) can access the shared context values.
+
+Here’s how the context flows:
+
+<PlayerContextProvider>
+  ├── <App /> (can access context)
+       ├── <Sidebar /> (can access context)
+       ├── <Display /> (can access context)
+       ├── <Player /> (can access context)
+</PlayerContextProvider>
+
+So yes, you're 100% correct: The values of audioRef, seekBar, track, play, pause, and others are available to all the components rendered inside <App />.
+
+
+
+
+
+
+
+
+
+
+
+ useEffect(()=>{
+    setTimeout(()=>{
+      audioRef.current.ontimeupdate = ()=>{
+        setTime({
+          currentTime:{
+            second:Math.floor(audioRef.current.currentTime%60), 
+            minute:Math.floor(audioRef.current.currentTime/60)
+          },
+          totalTime:{
+            second:Math.floor(audioRef.current.duration%60), 
+            minute:Math.floor(audioRef.current.duration/60)
+          }
+        })
+      }
+    },1000)//Delay of 1 second is to ensure that ensure the audio element is ready and properly initialized before setting up the ontimeupdate event listener.
+  },[audioRef])
+
+
+
+
+  First of all, useEffect() Hook runs only when audioRef changes, and audioRef changes when react links <audio> DOM element during the component mount and it happens only once, so technocally audioRef changes once and useEffect() Hook also runs once.
+  Since audioRef is a dependency of useEffect, the hook runs when audioRef.current transitions from undefined to the actual <audio> element.
+
+  Second we have the setTimeout() is there to introduce a 1-second delay before executing the logic inside it. After the audioRef.current is linked to the <audio> DOM element, it might still need a brief moment to fully initialize its properties (like currentTime and duration), especially if the audio file is being loaded over a network.
+
+  Thirdly we have 
+   audioRef.current.ontimeupdate = ....
+   ontimeupdate is an event handler for <audio> element and it fires whenever currentTime property of <audio> element is updated when audio is playing. audioRef.current means <audio> element, so its <audio>.ontimeupdate.
+
+   Then the setTime is the function that updates the time state.
+
+
+  Then 
+   The ontimeupdate event fires multiple times per second whenever the currentTime property of the <audio> element is updated.
+
+  Here,
+  We are specifically referring to:
+  audioRef.current.currentTime, which is <audio>.currentTime.
+
+  This is the property of the <audio> DOM element itself, and it represents the actual playback position of the audio in seconds.
+
+
+
+
+  second: Math.floor(audioRef.current.currentTime % 60)
+
+    audioRef.current.currentTime: The current playback position of the audio, in seconds (e.g., 75 seconds).
+
+    % 60: This calculates the remainder when the total seconds are divided by 60. This remainder gives the seconds part of the playback time.
+    Example:
+    If audioRef.current.currentTime = 75:
+    75 % 60 = 15 → 15 seconds.
+
+    Math.floor(...): Ensures we get an integer value by rounding down (though this isn't strictly necessary here since % already produces an integer for positive numbers).
+
+2. minute: Math.floor(audioRef.current.currentTime / 60)
+
+    audioRef.current.currentTime: Again, the current playback position in seconds.
+
+    / 60: This converts the total seconds into minutes by dividing by 60.
+    Example:
+    If audioRef.current.currentTime = 75:
+    75 / 60 = 1.25 → 1 minute and 25 seconds.
+
+    Math.floor(...): Rounds down the result to get the whole number of minutes.
+    Example:
+    Math.floor(1.25) = 1 → 1 minute.
+
+
+  Combined Result:
+
+If audioRef.current.currentTime = 75 seconds:
+
+    second = Math.floor(75 % 60) = 15 → 15 seconds.
+    minute = Math.floor(75 / 60) = 1 → 1 minute.
+
+So, the playback time is 1:15 (1 minute, 15 seconds).
+
+
+audioRef.current.duration:
+
+Source:
+
+    audioRef.current refers to the <audio> DOM element via the useRef hook.
+    .duration is a property of the <audio> element.
+
+Value:
+
+    .duration returns the length of the audio file in seconds as a number (e.g., 180 seconds for a 3-minute audio file).
+
+
+    await setTrack(songsData[id]);:
+        setTrack(songsData[id]) updates the track state with the song at index id from the songsData array.
+        The await ensures that the setTrack call is completed before proceeding to the next line. However, in practice, setTrack is synchronous, so the await here isn't necessary unless you expect asynchronous behavior in the future. Removing await would not cause any issues in this case.
+        Example: If id = 1, it will set the track state to songsData[1], changing the currently playing track.
+
+    await audioRef.current.play();:
+        This line starts playing the newly selected track using the audioRef reference.
+        The audioRef.current.play() method is called on the audio element to start playback.
+        The await ensures that the playback starts before the next action is performed, which can be useful for controlling flow (though, again, this could be omitted since play() is also synchronous).
+
+    setPlayStatus(true);:
+        This updates the playStatus state to true, indicating that the audio is currently playing.
+        This state can be used to update the UI, such as changing the play/pause button's icon.
+
+Why playWithId is useful:
+
+    This function allows you to dynamically change the track based on the id and immediately start playing that track. For example, you could call playWithId when a user clicks a song in a playlist, and it will start playing that song.
+    It encapsulates both the logic for selecting the track and the logic for controlling playback into a single function, making the code cleaner and more maintainable.
+
+
+
+
+
+Yes, the expression:
+
+(e.nativeEvent.offsetX) / seekBg.current.offsetWidth
+
+gives the percentage of the seek bar that the user has clicked on, relative to the total width of the seek bar (which represents the entire song duration).
+Explanation:
+
+    e.nativeEvent.offsetX: This gives the horizontal position of the mouse click, measured in pixels, relative to the left edge of the seekBg element (the background of the seek bar). So, if the user clicks 100px from the left, this value will be 100.
+
+    seekBg.current.offsetWidth: This gives the total width of the seekBg element (the full width of the seek bar), in pixels. For example, if the total width of the seek bar is 500px, this value will be 500.
+
+Formula Breakdown:
+
+The ratio of (e.nativeEvent.offsetX) to (seekBg.current.offsetWidth) gives a value between 0 and 1, representing how far along the seek bar the user clicked. This value is essentially the percentage of the seek bar clicked on. For example:
+
+    If the user clicks at the very beginning of the seek bar, the ratio will be 0 / 500 = 0, meaning the song is at 0% progress.
+    If the user clicks halfway through the seek bar, the ratio will be 250 / 500 = 0.5, meaning the song is at 50% progress.
+    If the user clicks at the end of the seek bar, the ratio will be 500 / 500 = 1, meaning the song is at 100% progress.
+
+Final Outcome:
+
+When this value is multiplied by the total duration of the song, you get the new currentTime for the song, effectively seeking to the position where the user clicked on the seek bar.
+
+
+
+
+    useNavigate(): This hook is used to programmatically change the URL, which means you can change the current route/path. When you call navigate('/somePath'), it updates the URL and tells React to render the component associated with that URL.
+
+    <Route>: This is used to define the mapping between a URL (path) and the component that should be rendered when that URL is matched.
+
+So, the flow is:
+
+    useNavigate() changes the URL programmatically. This updates the URL and tells React to look for a matching route.
+    <Route> is where you define the components that should be rendered for specific paths. For example:
+
+    <Route path='/album/:id' element={<DisplayAlbum />} />
+
+    This tells React that when the URL matches /album/:id, it should render the DisplayAlbum component.
+
+In your scenario:
+
+    When you use navigate('/'), it updates the URL to / (home page).
+    The Route component with the path / (if defined) will render the component for the home page.
+
+In short, navigate() is used to change the URL, and <Route> is used to associate the URL with a specific component to render.
+
+Here's a breakdown:
+
+    navigate('/') changes the URL to /.
+    <Route path="/" element={<Home />} /> (or whatever your home route is) ensures that when the URL is /, React will render the Home component.
+
+Also as in Display.jsx we already have defined the route for '/'
+        <Route path='/' element={<DisplayHome/>}></Route> 
+        So we go to home page as after changing the URL the DisplayHome component is called
+
+
+
+
+
+
+
+
+
+
+
+
+    <BrowserRouter>
+      <PlayerContextProvider>
+        <App />
+      </PlayerContextProvider>
+    </BrowserRouter>
+
+    Explain this part
+
+    <BrowserRouter>
+     You need to wrap your app with a BrowserRouter when using React Router for routing because it provides the context required for routing to work across the app.
+    <PlayerContextProvider>
+      By wrapping the app with PlayerContextProvider, you ensure that all child components have access to the player context and can update or access values like the current track, play status, etc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Learning useState(), useRef(), useEffect(), useContext(), and useNavigate() is an excellent foundation for working with React. These hooks cover most of the essential tasks for creating functional, interactive, and navigable applications. Here's why these are sufficient for many projects and when you might need more:
+Why These Hooks Are Sufficient
+
+    useState():
+        Handles component state.
+        Example: Toggling themes, managing form inputs, and tracking user interactions.
+
+    useRef():
+        Accesses DOM elements directly or persists values without triggering re-renders.
+        Example: Focusing input fields, storing timers, or caching data between renders.
+
+    useEffect():
+        Manages side effects like API calls, subscriptions, and event listeners.
+        Example: Fetching data from a server, updating the DOM, or cleaning up resources.
+
+    useContext():
+        Simplifies state and data sharing between deeply nested components.
+        Example: Managing themes, user authentication state, or global app settings.
+
+    useNavigate() (from React Router):
+        Handles navigation in a single-page application (SPA).
+        Example: Redirecting users after a form submission or linking to different routes.
+
+When These Are Enough
+
+    Building small to medium-sized projects.
+    Projects with basic state management and side effects.
+    Applications where routing is straightforward (e.g., simple blogs or portfolios).
+
+When You Might Need More
+
+    Complex State Logic:
+        Learn useReducer(): For managing more complex state transitions, such as in a shopping cart or form wizard.
+
+    Performance Optimization:
+        Learn useMemo(): For memoizing expensive calculations to improve performance.
+        Learn useCallback(): For memoizing functions to avoid unnecessary re-creation.
+
+    Dynamic Forms or High Interactivity:
+        Learn Custom Hooks: To encapsulate reusable logic (e.g., form validation or data fetching).
+
+    React 18+ Features:
+        useTransition() and useDeferredValue(): For handling concurrent UI updates and deferring updates to less important parts of the UI.
+
+    Server-Side Rendering (SSR) or SEO:
+        Explore libraries like Next.js or hooks like useId() for accessibility and rendering optimizations.
+
+Suggested Plan for You
+
+Since you’re aiming for front-end development, these hooks will likely cover 90% of your needs as a beginner. For job readiness:
+
+    Master these five hooks.
+    Build projects that implement common features:
+        Authentication.
+        Data fetching and displaying.
+        Routing and navigation.
+        Context-based state management (e.g., theme, user state).
+    Learn useReducer() and useMemo() if needed in larger projects.
+
+Would you like a step-by-step guide to learn and implement these hooks in a project?
